@@ -15,8 +15,9 @@
     <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
     
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6166342215834701"
-     crossorigin="anonymous"></script>
+    <!-- AdSense Code -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6166342215834701"
+         crossorigin="anonymous"></script>
     
     <style>
         * {
@@ -124,6 +125,111 @@
             border-color: #667eea;
         }
 
+        /* Fixed CSS for special fields */
+        .special-fields {
+            display: none;
+        }
+
+        .special-fields.active {
+            display: block;
+        }
+
+        .generate-btn, .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 5px;
+        }
+
+        .generate-btn:hover, .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .result-section {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .result-section h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .qr-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .ad-space {
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 10px;
+            color: #666;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: transform 0.2s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+
+        .footer p {
+            margin-bottom: 5px;
+        }
+
         .history-item {
             border: 1px solid #ddd;
             padding: 15px;
@@ -148,6 +254,10 @@
             .content {
                 padding: 20px;
             }
+            
+            .features {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
         }
     </style>
 </head>
@@ -159,11 +269,16 @@
         </div>
 
         <div class="content">
-            <!-- Ad Space - Replace with your AdSense code -->
-            <div class="ad-space">
-                <strong>Advertisement Space</strong><br>
-                Replace with your Google AdSense code here
-            </div>
+            <!-- Ad Space -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6166342215834701"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
 
             <div class="input-section">
                 <div class="input-group">
@@ -230,10 +345,7 @@
                         <label for="contact-website">Website:</label>
                         <input type="text" id="contact-website" placeholder="https://example.com (optional)">
                     </div>
-                    <div class="input-group">
-                        <label for="contact-meeting">Online Meeting Link:</label>
-                        <input type="text" id="contact-meeting" placeholder="https://zoom.us/j/123456789 or Google Meet link (optional)">
-                    </div>
+
                     <div class="input-group">
                         <label for="contact-linkedin">LinkedIn:</label>
                         <input type="text" id="contact-linkedin" placeholder="https://linkedin.com/in/username (optional)">
@@ -279,6 +391,10 @@
                         <input type="datetime-local" id="event-end">
                     </div>
                     <div class="input-group">
+                        <label for="event-meeting">Online Meeting Link:</label>
+                        <input type="text" id="event-meeting" placeholder="https://zoom.us/j/123456789 or Google Meet link (optional)">
+                    </div>
+                    <div class="input-group">
                         <label for="event-location">Location:</label>
                         <input type="text" id="event-location" placeholder="Conference Room A (optional)">
                     </div>
@@ -322,11 +438,16 @@
                 <button class="download-btn" onclick="clearHistory()" style="margin-top: 15px; background: #dc3545;">🗑️ Clear History</button>
             </div>
 
-            <!-- Ad Space - Replace with your AdSense code -->
-            <div class="ad-space">
-                <strong>Advertisement Space</strong><br>
-                Replace with your Google AdSense code here
-            </div>
+            <!-- Ad Space -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6166342215834701"
+                 data-ad-slot="0987654321"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
 
             <div class="features">
                 <div class="feature">
@@ -337,7 +458,7 @@
                 <div class="feature">
                     <div class="feature-icon">🔒</div>
                     <h4>Private & Secure</h4>
-                    <p>No data stored on our servers</p>
+                    <p>All QR codes saved locally to your device - no data stored on our servers</p>
                 </div>
                 <div class="feature">
                     <div class="feature-icon">📱</div>
@@ -349,6 +470,48 @@
                     <h4>100% Free</h4>
                     <p>No registration required</p>
                 </div>
+                <div class="feature">
+                    <div class="feature-icon">📲</div>
+                    <h4>Install as App</h4>
+                    <p>Add to home screen for quick access</p>
+                </div>
+            </div>
+
+            <!-- App Install Instructions -->
+            <div style="background: #f8f9fa; border-radius: 15px; padding: 30px; margin: 30px 0; text-align: center;">
+                <h3>📲 Install as Mobile App</h3>
+                <p style="margin: 15px 0; color: #666;">Get instant access from your home screen!</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="text-align: left;">
+                        <h4>🤖 Android:</h4>
+                        <p style="font-size: 14px; line-height: 1.5;">
+                            1. Tap the menu (⋮) in Chrome<br>
+                            2. Select "Add to Home screen"<br>
+                            3. Tap "Install" or "Add"
+                        </p>
+                    </div>
+                    <div style="text-align: left;">
+                        <h4>🍎 iPhone/iPad:</h4>
+                        <p style="font-size: 14px; line-height: 1.5;">
+                            1. Tap the Share button (□↑)<br>
+                            2. Select "Add to Home Screen"<br>
+                            3. Tap "Add"
+                        </p>
+                    </div>
+                    <div style="text-align: left;">
+                        <h4>💻 Desktop:</h4>
+                        <p style="font-size: 14px; line-height: 1.5;">
+                            1. Click install icon in address bar<br>
+                            2. Or use browser menu<br>
+                            3. Select "Install app"
+                        </p>
+                    </div>
+                </div>
+                
+                <button id="manual-install-btn" class="generate-btn" style="margin-top: 20px; display: none;">
+                    📲 Install App Now
+                </button>
             </div>
         </div>
 
@@ -367,10 +530,14 @@
             const allSpecialFields = document.querySelectorAll('.special-fields');
             
             // Hide all special fields first
-            textField.style.display = 'block';
-            allSpecialFields.forEach(field => field.classList.remove('active'));
+            allSpecialFields.forEach(field => {
+                field.classList.remove('active');
+            });
             
-            // Show relevant fields
+            // Show text field by default
+            textField.style.display = 'block';
+            
+            // Show relevant fields based on type
             if (type === 'wifi') {
                 textField.style.display = 'none';
                 document.getElementById('wifi-fields').classList.add('active');
@@ -383,10 +550,20 @@
             } else if (type === 'event') {
                 textField.style.display = 'none';
                 document.getElementById('event-fields').classList.add('active');
+            } else if (type === 'email') {
+                // For email, we can use the text field but change the placeholder
+                document.getElementById('qr-content').placeholder = 'Enter email address (e.g., john@example.com)';
+            } else if (type === 'phone') {
+                // For phone, we can use the text field but change the placeholder
+                document.getElementById('qr-content').placeholder = 'Enter phone number (e.g., +1-555-123-4567)';
+            } else {
+                // For text/URL, reset the placeholder
+                document.getElementById('qr-content').placeholder = 'Enter text, URL, or any content you want to encode...';
             }
         }
 
-        // Local Storage Functions
+        // Rest of your existing JavaScript functions remain the same...
+
         function saveToHistory() {
             if (!currentQRCode) return;
             
@@ -534,7 +711,6 @@
                     if (twitter) vcard += `URL:${twitter}\n`;
                     if (instagram) vcard += `URL:${instagram}\n`;
                     if (address) vcard += `ADR:;;${address.replace(/\n/g, ' ')}\n`;
-                    if (meeting) vcard += `NOTE:Meeting Link: ${meeting}\n`;
                     vcard += 'END:VCARD';
                     
                     return vcard;
@@ -548,6 +724,7 @@
                     const eventTitle = document.getElementById('event-title').value;
                     const eventStart = document.getElementById('event-start').value;
                     const eventEnd = document.getElementById('event-end').value;
+                    const eventMeeting = document.getElementById('event-meeting').value;
                     const eventLocation = document.getElementById('event-location').value;
                     const eventDescription = document.getElementById('event-description').value;
                     
@@ -558,7 +735,8 @@
                     if (eventStart) ics += `DTSTART:${formatDateTime(eventStart)}\n`;
                     if (eventEnd) ics += `DTEND:${formatDateTime(eventEnd)}\n`;
                     if (eventLocation) ics += `LOCATION:${eventLocation}\n`;
-                    if (eventDescription) ics += `DESCRIPTION:${eventDescription}\n`;
+                    if (eventMeeting) ics += `DESCRIPTION:${eventDescription}${eventDescription ? '\n\n' : ''}Meeting Link: ${eventMeeting}\n`;
+                    else if (eventDescription) ics += `DESCRIPTION:${eventDescription}\n`;
                     ics += 'END:VEVENT\n';
                     ics += 'END:VCALENDAR';
                     
@@ -655,6 +833,20 @@
                 e.preventDefault();
                 deferredPrompt = e;
                 showInstallButton();
+                // Also show the manual button
+                document.getElementById('manual-install-btn').style.display = 'inline-block';
+                document.getElementById('manual-install-btn').onclick = () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted the install prompt');
+                            }
+                            deferredPrompt = null;
+                            document.getElementById('manual-install-btn').style.display = 'none';
+                        });
+                    }
+                };
             });
             
             function showInstallButton() {
