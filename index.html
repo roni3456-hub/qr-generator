@@ -7,6 +7,17 @@
     <meta name="description" content="Generate QR codes instantly for URLs, text, WiFi, contact info and more. Free, fast, and no registration required.">
     <meta name="keywords" content="QR code generator, free QR codes, QR code maker, generate QR code, QR scanner">
     
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="QR Generator">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- ADD YOUR ADSENSE CODE HERE -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOURNUMBER" crossorigin="anonymous"></script> -->
+    
     <style>
         * {
             margin: 0;
@@ -87,6 +98,32 @@
             resize: vertical;
         }
 
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-upload label {
+            display: block;
+            padding: 15px;
+            border: 2px dashed #e1e5e9;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            background: #f8f9fa;
+        }
+
+        .file-upload label:hover {
+            border-color: #667eea;
+        }
+
         .generate-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -145,11 +182,11 @@
             font-size: 14px;
         }
 
-        .wifi-fields {
+        .special-fields {
             display: none;
         }
 
-        .wifi-fields.active {
+        .special-fields.active {
             display: block;
         }
 
@@ -178,6 +215,14 @@
             margin-bottom: 10px;
         }
 
+        .photo-preview {
+            max-width: 100px;
+            max-height: 100px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2em;
@@ -188,8 +233,6 @@
             }
         }
     </style>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6166342215834701"
-     crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
@@ -199,10 +242,10 @@
         </div>
 
         <div class="content">
-            <!-- Ad Space -->
+            <!-- Ad Space - Replace with your AdSense code -->
             <div class="ad-space">
                 <strong>Advertisement Space</strong><br>
-                Replace with Google AdSense code
+                Replace with your Google AdSense code here
             </div>
 
             <div class="input-section">
@@ -211,6 +254,9 @@
                     <select id="qr-type" onchange="toggleFields()">
                         <option value="text">Text/URL</option>
                         <option value="wifi">WiFi Network</option>
+                        <option value="contact">Contact Card</option>
+                        <option value="sms">SMS/Text Message</option>
+                        <option value="event">Calendar Event</option>
                         <option value="email">Email</option>
                         <option value="phone">Phone Number</option>
                     </select>
@@ -221,7 +267,8 @@
                     <textarea id="qr-content" placeholder="Enter text, URL, or any content you want to encode..."></textarea>
                 </div>
 
-                <div id="wifi-fields" class="wifi-fields">
+                <!-- WiFi Fields -->
+                <div id="wifi-fields" class="special-fields">
                     <div class="input-group">
                         <label for="wifi-ssid">WiFi Network Name (SSID):</label>
                         <input type="text" id="wifi-ssid" placeholder="Enter WiFi network name">
@@ -237,6 +284,82 @@
                             <option value="WEP">WEP</option>
                             <option value="nopass">None (Open)</option>
                         </select>
+                    </div>
+                </div>
+
+                <!-- Contact Card Fields -->
+                <div id="contact-fields" class="special-fields">
+                    <div class="input-group">
+                        <label for="contact-photo">Profile Photo (Optional):</label>
+                        <div class="file-upload">
+                            <input type="file" id="contact-photo" accept="image/*" onchange="previewPhoto(this)">
+                            <label for="contact-photo">📸 Click to upload photo</label>
+                        </div>
+                        <img id="photo-preview" class="photo-preview" alt="Photo preview">
+                    </div>
+                    <div class="input-group">
+                        <label for="contact-name">Full Name:</label>
+                        <input type="text" id="contact-name" placeholder="John Doe">
+                    </div>
+                    <div class="input-group">
+                        <label for="contact-company">Company:</label>
+                        <input type="text" id="contact-company" placeholder="Company Name (optional)">
+                    </div>
+                    <div class="input-group">
+                        <label for="contact-title">Job Title:</label>
+                        <input type="text" id="contact-title" placeholder="Job Title (optional)">
+                    </div>
+                    <div class="input-group">
+                        <label for="contact-phone">Phone Number:</label>
+                        <input type="text" id="contact-phone" placeholder="+1-555-123-4567">
+                    </div>
+                    <div class="input-group">
+                        <label for="contact-email">Email:</label>
+                        <input type="email" id="contact-email" placeholder="john@example.com">
+                    </div>
+                    <div class="input-group">
+                        <label for="contact-website">Website:</label>
+                        <input type="text" id="contact-website" placeholder="https://example.com (optional)">
+                    </div>
+                    <div class="input-group">
+                        <label for="contact-address">Address:</label>
+                        <textarea id="contact-address" placeholder="123 Main St, City, State 12345 (optional)" style="min-height: 80px;"></textarea>
+                    </div>
+                </div>
+
+                <!-- SMS Fields -->
+                <div id="sms-fields" class="special-fields">
+                    <div class="input-group">
+                        <label for="sms-number">Phone Number:</label>
+                        <input type="text" id="sms-number" placeholder="+1-555-123-4567">
+                    </div>
+                    <div class="input-group">
+                        <label for="sms-message">Pre-written Message:</label>
+                        <textarea id="sms-message" placeholder="Enter the message you want to pre-fill..." style="min-height: 100px;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Event Fields -->
+                <div id="event-fields" class="special-fields">
+                    <div class="input-group">
+                        <label for="event-title">Event Title:</label>
+                        <input type="text" id="event-title" placeholder="Meeting with Client">
+                    </div>
+                    <div class="input-group">
+                        <label for="event-start">Start Date & Time:</label>
+                        <input type="datetime-local" id="event-start">
+                    </div>
+                    <div class="input-group">
+                        <label for="event-end">End Date & Time:</label>
+                        <input type="datetime-local" id="event-end">
+                    </div>
+                    <div class="input-group">
+                        <label for="event-location">Location:</label>
+                        <input type="text" id="event-location" placeholder="Conference Room A (optional)">
+                    </div>
+                    <div class="input-group">
+                        <label for="event-description">Description:</label>
+                        <textarea id="event-description" placeholder="Event details..." style="min-height: 80px;"></textarea>
                     </div>
                 </div>
 
@@ -264,10 +387,10 @@
                 <button class="download-btn" onclick="downloadSVG()">Download SVG</button>
             </div>
 
-            <!-- Ad Space -->
+            <!-- Ad Space - Replace with your AdSense code -->
             <div class="ad-space">
                 <strong>Advertisement Space</strong><br>
-                Replace with Google AdSense code
+                Replace with your Google AdSense code here
             </div>
 
             <div class="features">
@@ -306,15 +429,47 @@
         function toggleFields() {
             const type = document.getElementById('qr-type').value;
             const textField = document.getElementById('text-field');
-            const wifiFields = document.getElementById('wifi-fields');
+            const allSpecialFields = document.querySelectorAll('.special-fields');
             
+            // Hide all special fields first
+            textField.style.display = 'block';
+            allSpecialFields.forEach(field => field.classList.remove('active'));
+            
+            // Show relevant fields
             if (type === 'wifi') {
                 textField.style.display = 'none';
-                wifiFields.classList.add('active');
-            } else {
-                textField.style.display = 'block';
-                wifiFields.classList.remove('active');
+                document.getElementById('wifi-fields').classList.add('active');
+            } else if (type === 'contact') {
+                textField.style.display = 'none';
+                document.getElementById('contact-fields').classList.add('active');
+            } else if (type === 'sms') {
+                textField.style.display = 'none';
+                document.getElementById('sms-fields').classList.add('active');
+            } else if (type === 'event') {
+                textField.style.display = 'none';
+                document.getElementById('event-fields').classList.add('active');
             }
+        }
+
+        function previewPhoto(input) {
+            const preview = document.getElementById('photo-preview');
+            const label = input.nextElementSibling;
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    label.textContent = '✅ Photo uploaded - Click to change';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function formatDateTime(dateTime) {
+            if (!dateTime) return '';
+            const date = new Date(dateTime);
+            return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
         }
 
         function getQRContent() {
@@ -327,13 +482,61 @@
                     const security = document.getElementById('wifi-security').value;
                     return `WIFI:T:${security};S:${ssid};P:${password};;`;
                 
+                case 'contact':
+                    const name = document.getElementById('contact-name').value;
+                    const company = document.getElementById('contact-company').value;
+                    const title = document.getElementById('contact-title').value;
+                    const phone = document.getElementById('contact-phone').value;
+                    const email = document.getElementById('contact-email').value;
+                    const website = document.getElementById('contact-website').value;
+                    const address = document.getElementById('contact-address').value;
+                    
+                    // Create vCard format
+                    let vcard = 'BEGIN:VCARD\n';
+                    vcard += 'VERSION:3.0\n';
+                    if (name) vcard += `FN:${name}\n`;
+                    if (company) vcard += `ORG:${company}\n`;
+                    if (title) vcard += `TITLE:${title}\n`;
+                    if (phone) vcard += `TEL:${phone}\n`;
+                    if (email) vcard += `EMAIL:${email}\n`;
+                    if (website) vcard += `URL:${website}\n`;
+                    if (address) vcard += `ADR:;;${address.replace(/\n/g, ' ')}\n`;
+                    vcard += 'END:VCARD';
+                    
+                    return vcard;
+                
+                case 'sms':
+                    const smsNumber = document.getElementById('sms-number').value;
+                    const smsMessage = document.getElementById('sms-message').value;
+                    return `sms:${smsNumber}?body=${encodeURIComponent(smsMessage)}`;
+                
+                case 'event':
+                    const eventTitle = document.getElementById('event-title').value;
+                    const eventStart = document.getElementById('event-start').value;
+                    const eventEnd = document.getElementById('event-end').value;
+                    const eventLocation = document.getElementById('event-location').value;
+                    const eventDescription = document.getElementById('event-description').value;
+                    
+                    let ics = 'BEGIN:VCALENDAR\n';
+                    ics += 'VERSION:2.0\n';
+                    ics += 'BEGIN:VEVENT\n';
+                    if (eventTitle) ics += `SUMMARY:${eventTitle}\n`;
+                    if (eventStart) ics += `DTSTART:${formatDateTime(eventStart)}\n`;
+                    if (eventEnd) ics += `DTEND:${formatDateTime(eventEnd)}\n`;
+                    if (eventLocation) ics += `LOCATION:${eventLocation}\n`;
+                    if (eventDescription) ics += `DESCRIPTION:${eventDescription}\n`;
+                    ics += 'END:VEVENT\n';
+                    ics += 'END:VCALENDAR';
+                    
+                    return ics;
+                
                 case 'email':
                     const content = document.getElementById('qr-content').value;
                     return content.includes('@') ? `mailto:${content}` : content;
                 
                 case 'phone':
-                    const phone = document.getElementById('qr-content').value;
-                    return `tel:${phone}`;
+                    const phoneNum = document.getElementById('qr-content').value;
+                    return `tel:${phoneNum}`;
                 
                 default:
                     return document.getElementById('qr-content').value;
@@ -394,8 +597,50 @@
             document.body.removeChild(link);
         }
 
+        // PWA functionality
         document.addEventListener('DOMContentLoaded', function() {
             toggleFields();
+            
+            // Register service worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            }
+            
+            // Add install prompt
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                showInstallButton();
+            });
+            
+            function showInstallButton() {
+                const installBtn = document.createElement('button');
+                installBtn.textContent = '📱 Install App';
+                installBtn.className = 'download-btn';
+                installBtn.style.position = 'fixed';
+                installBtn.style.bottom = '20px';
+                installBtn.style.right = '20px';
+                installBtn.style.zIndex = '1000';
+                
+                installBtn.addEventListener('click', () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            deferredPrompt = null;
+                            installBtn.remove();
+                        });
+                    }
+                });
+                
+                document.body.appendChild(installBtn);
+            }
         });
     </script>
 </body>
